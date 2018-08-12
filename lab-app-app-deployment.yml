@@ -1,39 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lab-app-nginxplus-deployment
+  name: lab-app-app-deployment
   labels:
     app: lab-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      name: nginxplus-pod
+      name: app-pod
       app: lab-app
   template:
     metadata:
-      name: nginxplus-pod
+      name: app-pod
       labels:
-        name: nginxplus-pod
+        name: app-pod
         app: lab-app
 
     spec:
       containers:
-      - name: web
-        image: registry.nascop.org:5000/nginxplus:lab-app
+      - name: app
+        image: mwendakith/lab:1
         resources:
           limits:
             cpu: 0.2
             memory: "128Mi"
         volumeMounts:
           - mountPath: /var/www/lab
-            name: nginxplus-data
+            name: app-data
         ports:
-        - containerPort: 80
+        - containerPort: 7000
       volumes:
-        - name: nginxplus-data
+        - name: app-data
           hostPath:
             path: /var/lib/docker/volumes/lab_myapp/_data/
             type: Directory
-      imagePullSecrets:
-        - name: regsecret
