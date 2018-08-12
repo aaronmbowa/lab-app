@@ -22,13 +22,17 @@ spec:
       - name: redis
         image: redis
         args: ["--appendonly yes"]
+        resources:
+          limits:
+            cpu: 0.2
+            memory: "128Mi"
         volumeMounts:
           - mountPath: /data
             name: redis-data
         ports:
         - containerPort: 6379
       volumes:
-        - names: redis-data
+        - name: redis-data
           hostPath:
             path: /var/lib/docker/volumes/lab_redis_data/_data/
             type: Directory
