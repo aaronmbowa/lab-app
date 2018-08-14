@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: mwendakith/lab:1
+        image: mwendakith/lab:1.2
         resources:
           limits:
             cpu: 0.2

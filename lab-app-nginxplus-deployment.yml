@@ -5,7 +5,7 @@ metadata:
   labels:
     app: lab-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       name: nginxplus-pod
@@ -20,11 +20,11 @@ spec:
     spec:
       containers:
       - name: web
-        image: registry.nascop.org:5000/nginxplus:lab-app
+        image: registry.nascop.org:5000/mynginx:lab-app-docker-test
         resources:
           limits:
-            cpu: 0.2
-            memory: "128Mi"
+            cpu: 0.5
+            memory: "2Gi"
         volumeMounts:
           - mountPath: /var/www/lab
             name: nginxplus-data
