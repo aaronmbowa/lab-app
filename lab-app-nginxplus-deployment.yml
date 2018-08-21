@@ -22,10 +22,16 @@ spec:
       - name: web
         image: registry.nascop.org:5000/mynginx:lab-app-kemri-nairobi
         volumeMounts:
-          - mountPath: /var/www/lab
-            name: nginxplus-data
           - mountPath: /etc/nginx/conf.d
             name: default-conf
+          - mountPath: /etc/amplify-agent/agent.conf
+            subPath: agent.conf
+            name: amplify-conf
+          - mountPath: /var/www/lab/.env
+            subPath: .env
+            name: env-conf
+          - mountPath: /var/www/lab
+            name: nginxplus-data
         ports:
         - containerPort: 80
       volumes:
@@ -37,5 +43,12 @@ spec:
           hostPath:
             path: /var/lib/docker/volumes/lab_nginx_conf/_data/
             type: Directory
+        - name: amplify-conf
+          configMap:
+            name: amplify-conf
+        - name: env-conf
+          configMap:
+            name: env-conf
+
       imagePullSecrets:
         - name: regsecret
