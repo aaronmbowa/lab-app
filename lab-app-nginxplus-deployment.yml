@@ -20,14 +20,12 @@ spec:
     spec:
       containers:
       - name: web
-        image: registry.nascop.org:5000/mynginx:lab-app-docker-test
-        resources:
-          limits:
-            cpu: 0.5
-            memory: "2Gi"
+        image: registry.nascop.org:5000/mynginx:lab-app-kemri-nairobi
         volumeMounts:
           - mountPath: /var/www/lab
             name: nginxplus-data
+          - mountPath: /etc/nginx/conf.d
+            name: extra-nginx
         ports:
         - containerPort: 80
       volumes:
@@ -35,5 +33,8 @@ spec:
           hostPath:
             path: /var/lib/docker/volumes/lab_myapp/_data/
             type: Directory
+        - name: extra-nginx
+          ConfigMap:
+            - name: extra-conf
       imagePullSecrets:
         - name: regsecret
